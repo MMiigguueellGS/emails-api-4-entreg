@@ -61,8 +61,9 @@ const remove = catchError(async (req, res) => {
 });
 
 const update = catchError(async (req, res) => {
+  const {firstName,lastName,country} = req.body
   const { id } = req.params;
-  const result = await User.update(req.body, {
+  const result = await User.update({firstName,lastName,country}, {
     where: { id },
     returning: true,
   });
