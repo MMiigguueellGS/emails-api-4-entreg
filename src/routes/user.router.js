@@ -1,0 +1,33 @@
+const {
+  getAll,
+  create,
+  getOne,
+  remove,
+  update,
+  VerifyCode,
+  login,
+  resetPassword,
+  resetPasswordCode,
+  getMe,
+} = require("../controllers/user.controllers");
+const express = require("express");
+const verifyJWT = require("../utils/verifyJWT");
+
+const userRouter = express.Router();
+
+userRouter.route("/").get(verifyJWT, getAll).post(create);
+userRouter.route("/reset_password").post(resetPassword);
+userRouter.route("/me").get(verifyJWT, getMe);
+userRouter.route("/reset_password/:code").post(resetPasswordCode);
+
+userRouter.route("/verify/:code").get(VerifyCode);
+userRouter.route("/login").post(login);
+
+userRouter
+  .route("/:id")
+  .get(verifyJWT, getOne)
+  .delete(verifyJWT, remove)
+  .put(verifyJWT, update);
+
+//localhost:5173/
+http: module.exports = userRouter;
